@@ -4,6 +4,10 @@ ALGORITHMS_ENDPOINT_URL = "https://leetcode.com/api/problems/algorithms/"
 # e.g https://leetcode.com/problems/two-sum
 ALGORITHMS_BASE_URL = "https://leetcode.com/problems/"
 
+JSON_FILENAME_QNS = "leetcode_qns.json"
+
+JSON_FILENAME_GRAPH = "leetcode_qns_graph.json"
+
 ''' Requirements
 --Pre-Scrape--
 ID - Number
@@ -15,7 +19,7 @@ Submissions - Number
 Acc Submissions - Number
 
 --Post-Scrape--
-Categories - []
+Topics - []
 Upvote, Downvote
 '''
 
