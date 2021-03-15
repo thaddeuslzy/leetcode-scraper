@@ -11,5 +11,6 @@ Scrapes information on algorithm questions from LeetCode and outputs data to a J
 6. To deactivate venv, enter `deactivate`
 
 ### TODO
-1. Get Related Questions for mapping
-2. ... (Feel free to add on features!)
+1. Get related questions and map those respectively in graph links
+2. Get question descriptions to add to each node data
+3. ... (Feel free to add on features!)

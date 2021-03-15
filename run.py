@@ -74,8 +74,8 @@ def genProblemsJSON(LOGGER, is_headless, is_debug):
   driver_instance = DriverInstance(LOGGER, is_headless, is_debug)
   problems = {}
 
-  for problem in problem_list[:10]: # TODO: Remove limit of 10 qns when doing FREAL
-    if not problem["paid_only"]: # Only free ones
+  for problem in problem_list:
+    if not problem["paid_only"]: # Only get free questions
       p = {}
       p["id"] = problem["stat"]["frontend_question_id"]
       p["name"] = problem["stat"]["question__title"]
@@ -109,30 +109,22 @@ def genGraphJSON():
     nodes = []
     links = []
 
-    # Problem Nodes
-    for v in problems.values():
-      topics = topics.union(set(v["topics"])) # add topics to set
-      nodes.append(v) # generate node
+    # Problem Nodes & Links
+    for node in problems.values():
+      topics = topics.union(set(node["topics"])) # add topics to Topic set
+      nodes.append(node)
+      if len(node["topics"]) == 0:
+        links.append({"source": "Uncategorized", "target": node["id"], "value": 1})
+      else:
+        for topic in node["topics"]: # generate links
+          links.append({"source": topic, "target": node["id"], "value": 1})
 
-      for topic in v["topics"]: # generate links
-        links.append({
-            "source": v["id"],
-            "target": topic,
-            "value": 1,
-        })
-
-    # Topic Nodes
-    for topic in topics:
-      nodes.append({
-        "id": topic,
-        "name": topic,
-        "group": 1,
-      })
-      links.append({
-        "source": topic,
-        "target": "Topics"
-      })
+    # Topic Nodes & Links
     nodes.append({"id": "Topics", "name": "Topics", "group": 0})
+    topics.add("Uncategorized")
+    for topic in topics:
+      nodes.append({"id": topic, "name": topic, "group": 1})
+      links.append({"source": "Topics", "target": topic})
 
     res = { "nodes":nodes, "links":links }
 
